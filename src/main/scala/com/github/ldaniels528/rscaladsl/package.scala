@@ -77,6 +77,22 @@ package object rscaladsl {
 
   implicit def stringToR(value: String): RString = RString(value)
 
+  implicit def rToString(value: RString): String = value.value
+
+  // range conversions
+
+  implicit def rangeToR(range: Range): RVector = RVector(range.toVector.map(RInteger))
+
+  // tuple conversions
+
+  implicit def tupleBooleanToR(tuple: (String, Boolean)): RTuple = RTuple(tuple._1, tuple._2)
+
+  implicit def tupleDoubleToR(tuple: (String, Double)): RTuple = RTuple(tuple._1, tuple._2)
+
+  implicit def tupleToIntR(tuple: (String, Int)): RTuple = RTuple(tuple._1, tuple._2)
+
+  implicit def tupleToStringR(tuple: (String, String)): RTuple = RTuple(tuple._1, tuple._2)
+
   /**
     * R-Variable Enrichment
     * @param a the host variable

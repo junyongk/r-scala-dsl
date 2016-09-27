@@ -6,6 +6,6 @@ package com.github.ldaniels528.rscaladsl
   */
 class DataType {
 
-  def frame(items: RValue*) = DataFrame(items)
+  def frame(items: RValue*) = RDataFrame(items: _*)
 
 }

@@ -34,28 +34,34 @@ package object rscaladsl {
   ///////////////////////////////////////////////////////////////////
 
   /**
-    * "as" object => as.integer(k)
+    * "as" object
+    * @example as.integer(k)
     */
   object as extends AsType
 
   /**
-    * "is" object => is.integer(k)
+    * "data" object
+    * @example data.frame(2:3, a="text", b=1)
+    */
+  object data extends DataType
+
+  /**
+    * "is" object
+    * @example is.integer(k)
     */
   object is extends IsType
 
   /**
-    * "read" object => read.csv(file = "./NASDAQ_20120927.txt", header = TRUE, sep = ",")
+    * "read" object
+    * @example read.csv(file = "./NASDAQ_20120927.txt", header = TRUE, sep = ",")
     */
   object read extends ReadFile
 
   /**
-    * "to" object => to.data.frame = FALSE
+    * "to" object
+    * @example to.data.frame = FALSE
     */
-  object to {
-    object data {
-      var frame: RLogical = false
-    }
-  }
+  object to extends ToType
 
   ///////////////////////////////////////////////////////////////////
   //      Implicit conversions

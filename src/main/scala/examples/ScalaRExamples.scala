@@ -1,4 +1,4 @@
-package com.github.ldaniels.rscaladsl.examples
+package examples
 
 import com.github.ldaniels528.rscaladsl._
 
@@ -8,7 +8,7 @@ import scala.language.postfixOps
   * R-Scala DSL Examples
   * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
-object ScalaToRTest {
+object ScalaRExamples {
 
   def main(args: Array[String]) = example4()
 

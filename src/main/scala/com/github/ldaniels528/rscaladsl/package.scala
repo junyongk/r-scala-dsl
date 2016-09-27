@@ -89,9 +89,11 @@ package object rscaladsl {
 
   implicit def tupleDoubleToR(tuple: (String, Double)): RTuple = RTuple(tuple._1, tuple._2)
 
-  implicit def tupleToIntR(tuple: (String, Int)): RTuple = RTuple(tuple._1, tuple._2)
+  implicit def tupleIntToR(tuple: (String, Int)): RTuple = RTuple(tuple._1, tuple._2)
 
-  implicit def tupleToStringR(tuple: (String, String)): RTuple = RTuple(tuple._1, tuple._2)
+  implicit def tupleRValueToR(tuple: (String, RValue)): RTuple = RTuple(tuple._1, tuple._2)
+
+  implicit def tupleStringToR(tuple: (String, String)): RTuple = RTuple(tuple._1, tuple._2)
 
   /**
     * R-Variable Enrichment

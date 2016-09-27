@@ -10,7 +10,7 @@ import scala.language.postfixOps
   */
 object ScalaRExamples {
 
-  def main(args: Array[String]) = example5()
+  def main(args: Array[String]) = example6()
 
   def example1() = {
     val x: RValue = 10.5 // assign a decimal value
@@ -45,6 +45,12 @@ object ScalaRExamples {
   def example5() = {
     val t = data.frame(2 to 3, "a" -> "text", "b" -> 1)
     println(t)
+  }
+
+  def example6() = {
+    // R: v = list(bob=c(2, 3, 5), john=c("aa", "bb"))
+    val v = list("bob" -> c(2, 3, 5), "john" -> c("aa", "bb"))
+    println(v)
   }
 
 }

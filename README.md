@@ -577,7 +577,7 @@ A data frame is used for storing data tables. It is a list of vectors of equal l
     > b = c(TRUE, FALSE, TRUE) 
     > df = data.frame(n, s, b)       # df is a data frame
 
-Build-in Data Frame
+Built-in Data Frame
 
 We use built-in data frames in R for our tutorials. For example, here is a built-in data frame in R, called mtcars.
 

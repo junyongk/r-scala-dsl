@@ -11,6 +11,8 @@ package object rscaladsl {
   val TRUE: RLogical = true
   val FALSE: RLogical = false
 
+  type RCondition = RValue => Boolean
+
   ///////////////////////////////////////////////////////////////////
   //      Built-in functions
   ///////////////////////////////////////////////////////////////////
@@ -23,11 +25,18 @@ package object rscaladsl {
 
   def getwd(): String = Properties.userDir
 
-  def list(values: RValue*) = RList(headers = Nil, Seq(values))
+  def list(values: RValue*) = RList(values, headers = Nil)
 
   def matrix(data: RVector, nrow: RInteger, ncol: RInteger, byrow: RLogical) = RMatrix(data, nrow, ncol, byrow)
 
   def setwd(directory: String) = Properties.setProp("user.dir", directory)
+
+  def subset(list: RListLike, conditions: RCondition*) = list match {
+    case RList(items, headers) => RList(items = conditions.foldLeft(items)((list, cond) => list.filter(cond)), headers)
+    case RDataFrame(items) => new RDataFrame(items = conditions.foldLeft(items)((list, cond) => list.filter(cond)))
+    case RVector(items) => RVector(items = conditions.foldLeft(items)((list, cond) => list.filter(cond)))
+    case _ => throw new IllegalArgumentException(s"Type '${list.`class`}' is not supported")
+  }
 
   ///////////////////////////////////////////////////////////////////
   //      Built-in objects

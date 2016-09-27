@@ -1,5 +1,7 @@
 package com.github.ldaniels528.rscaladsl
 
+import com.github.ldaniels528.rscaladsl.AsType.AsDataType
+
 import scala.util.Try
 
 /**
@@ -7,6 +9,8 @@ import scala.util.Try
   * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 class AsType {
+
+  object data extends AsDataType
 
   def double(rvalue: RValue): RValue = {
     rvalue match {
@@ -34,5 +38,20 @@ class AsType {
       case _ => true
     }
   }
+
+}
+
+/**
+  * AsType Companion
+  *  @author Lawrence Daniels <lawrence.daniels@gmail.com>
+  */
+object AsType {
+
+  class AsDataType {
+
+    def frame(value: RValue): RDataFrame = ???
+
+  }
+
 
 }

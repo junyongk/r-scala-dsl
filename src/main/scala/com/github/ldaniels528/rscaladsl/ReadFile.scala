@@ -15,8 +15,8 @@ class ReadFile {
   def csv(file: String, header: RLogical = false, sep: String = null) = {
     val lines = Source.fromFile(file).getLines()
     val headers = (if (header) Some(lines.next()) else None).map(divide(_, sep)) getOrElse Seq("NA")
-    val data = lines.map(line => divide(line, sep)).toSeq
-    RList(headers, data)
+    val items = lines.map(line => RList(items = divide(line, sep).map(RString))).toSeq
+    RList(items, headers)
   }
 
   /**

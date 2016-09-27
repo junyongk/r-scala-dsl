@@ -10,17 +10,26 @@ sealed trait RValue {
 
 /**
   * Represents a data frame
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
-case class RDataFrame(items: RValue*) extends RValue {
+class RDataFrame(val items: Seq[RValue]) extends RListLike {
   override val `class` = "frame"
 
   override def toString = items.mkString(", ")
 }
 
 /**
+  * RDataFrame Companion
+  */
+object RDataFrame {
+
+  def apply(items: RValue*) = new RDataFrame(items)
+
+  def unapply(frame: RDataFrame): Option[Seq[RValue]] = Option(frame.items)
+
+}
+
+/**
   * Represents an R-Double value
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 case class RDouble(value: Double) extends RNumeric {
   override val `class` = "numeric"
@@ -30,7 +39,6 @@ case class RDouble(value: Double) extends RNumeric {
 
 /**
   * Represents an R-Integer value
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 case class RInteger(value: Int) extends RNumeric {
   override val `class` = "numeric"
@@ -40,12 +48,26 @@ case class RInteger(value: Int) extends RNumeric {
 
 /**
   * R-List Collection
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
-case class RList[T](headers: Seq[String], items: Seq[Seq[T]]) extends RValue {
+case class RList(items: Seq[RValue], headers: Seq[String] = Nil) extends RListLike {
   override val `class` = "list"
 
-  override def toString = TableGenerator.transform(headers, items).mkString("\n")
+  override def toString = {
+    val values = items map {
+      case RList(theItems, _) => theItems.map(_.toString)
+      case v => Seq(v.toString)
+    }
+    TableGenerator.transform(headers, values) mkString "\n"
+  }
+}
+
+/**
+  * R List-like Collection
+  */
+trait RListLike extends RValue {
+
+  def items: Seq[RValue]
+
 }
 
 case class RLogical(value: Boolean) extends RValue {
@@ -58,7 +80,6 @@ case class RLogical(value: Boolean) extends RValue {
 
 /**
   * Represents a R-compatible Null value
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 object RNull extends RValue {
   override val `class` = "NA"
@@ -74,13 +95,11 @@ case class RMatrix(data: RVector, nrow: RInteger, ncol: RInteger, byrow: RLogica
 
 /**
   * Represents an R Numeric value
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 trait RNumeric extends RValue
 
 /**
   * Represents an R Numeric value
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 case class RString(value: String) extends RValue {
   override val `class` = "string"
@@ -90,7 +109,6 @@ case class RString(value: String) extends RValue {
 
 /**
   * Represents an R Tuple; a name-value pair.
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 case class RTuple(name: String, value: RValue) extends RValue {
   override val `class` = value.`class`
@@ -100,7 +118,6 @@ case class RTuple(name: String, value: RValue) extends RValue {
 
 /**
   * Represents an R variable
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
 case class RVariable(var value: RValue = RNull) extends RValue {
   override val `class` = value.`class`
@@ -110,10 +127,9 @@ case class RVariable(var value: RValue = RNull) extends RValue {
 
 /**
   * R-like Vector
-  * @author Lawrence Daniels <lawrence.daniels@gmail.com>
   */
-case class RVector(values: Seq[RValue]) extends RValue {
+case class RVector(items: Seq[RValue]) extends RListLike {
   override val `class` = "vector"
 
-  override def toString = values.mkString(", ")
+  override def toString = items.mkString(", ")
 }

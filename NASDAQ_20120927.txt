@@ -1,4 +1,4 @@
-<ticker>,<date>,<open>,<high>,<low>,<close>,<vol>
+ticker,date,open,high,low,close,vol
 AACC,20120927,7.47,7.7,7.41,7.7,16700
 AACOW,20120927,0.27,0.27,0.27,0.27,2500
 AAIT,20120927,27.24,27.24,27.24,27.24,0

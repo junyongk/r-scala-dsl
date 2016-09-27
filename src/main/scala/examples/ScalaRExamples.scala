@@ -10,7 +10,7 @@ import scala.language.postfixOps
   */
 object ScalaRExamples {
 
-  def main(args: Array[String]) = example6()
+  def main(args: Array[String]) = example2()
 
   def example1() = {
     val x: RValue = 10.5 // assign a decimal value
@@ -23,10 +23,12 @@ object ScalaRExamples {
   }
 
   def example2() = {
-    val data = RVariable()
+    val trades = read.csv(file = "./NASDAQ_20120927.txt", header = TRUE, sep = ",")
+    println(trades)
 
-    data <= read.csv(file = "./NASDAQ_20120927.txt", header = TRUE, sep = ",")
-    println(data)
+    println(s"Data frame? ${is.data.frame(trades)}")
+    println(s"Vector? ${is.vector(trades)}")
+    println(s"List? ${is.list(trades)}")
   }
 
   def example3() = {
@@ -43,8 +45,9 @@ object ScalaRExamples {
   }
 
   def example5() = {
-    val t = data.frame(2 to 3, "a" -> "text", "b" -> 1)
-    println(t)
+    // R: f = data.frame(2:3, a="text", b=1)
+    val f = data.frame(2 to 3, "a" -> "text", "b" -> 1)
+    println(f)
   }
 
   def example6() = {

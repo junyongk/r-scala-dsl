@@ -1,9 +1,5 @@
 package com.github.ldaniels528.rscaladsl
 
-import org.slf4j.LoggerFactory
-
-import scala.collection.GenSeq
-
 /**
   * R-Table Generator
   * @author lawrence.daniels@gmail.com
@@ -24,7 +20,7 @@ object TableGenerator {
       makeTable(headers, rows)
     }
   }
-  
+
   private def makeTable(headers: Seq[String], rows: Seq[Map[String, String]]): List[String] = {
     // create the horizontal border, header and compute column widths
     val widths = columnWidths(headers, rows)
@@ -57,11 +53,11 @@ object TableGenerator {
       case o: Option[_] => if (o.isDefined) asString(o.get) else ""
       case v => String.valueOf(v)
     }
-    if(output.length > 140) output.substring(0, 140) + "..." else output
+    if (output.length > 140) output.substring(0, 140) + "..." else output
   }
 
   private def constructRow(values: Seq[(String, Int)]): String = {
-    (values map { case (data, width) => data + " " * Math.abs(width - data.length)}).mkString
+    (values map { case (data, width) => data + " " * Math.abs(width - data.length) }).mkString
   }
 
   /**
@@ -76,7 +72,7 @@ object TableGenerator {
     // reduce the rows to a mapping of column to max width
     val result = rows.foldLeft[Map[String, Int]](Map.empty) {
       (res, row) =>
-        res ++ (row map { case (k, v) => (k, smash(k, v, res.get(k) map (max(k.length, _)) getOrElse k.length))})
+        res ++ (row map { case (k, v) => (k, smash(k, v, res.get(k) map (max(k.length, _)) getOrElse k.length)) })
     }
 
     // return just the column widths in the appropriate order
